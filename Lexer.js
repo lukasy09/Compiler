@@ -5,8 +5,8 @@ class Lexer {
     constructor() {
         this.tokens = [];
 
-        this.separators = [" ", "\t", "\n", ".", ",", "(", ")", "{", "}", "[", "]"];
-        this.operators = ["+", "-", "*", "/"]
+        this.separators = [" ", "\t", "\n", ".", ",", ";", "(", ")", "{", "}", "[", "]"];
+        this.operators = ["+", "-", "*", "/", "=", "==", "<", ">"]
     }
 
     lex(str) {
@@ -23,8 +23,12 @@ class Lexer {
                 index += obj.offset;
                 char = str[index];
                 continue;
-            } else if (Helper.checkIfLiteral(str, index)) {
-
+            } else if (Helper.checkIfLiteral(str, index).isLiteral) {
+                let obj = Helper.checkIfLiteral(str, index);
+                this.tokens.push(["literal", obj.literalName]);
+                index += obj.offset;
+                char = str[index];
+                continue;
 
             } else if (Helper.isIn(char, this.operators)) {
                 this.tokens.push(["operator", char]);
@@ -44,6 +48,6 @@ class Lexer {
 }
 
 lexer = new Lexer();
-lexer.lex(`var xTest=5; if(true){}`);
+lexer.lex(`var tmp=5; if(a>b){}`);
 
 console.log(lexer.tokens);

@@ -31,8 +31,48 @@ class Helper{
        }
     }
 
-    static checkIfLiteral(){
+    static checkIfLiteral(str, index){
 
+        if(this.checkIfBoolLiteral(str,index).isLiteral){
+
+            return this.checkIfBoolLiteral(str,index);
+        }
+
+        return false;
+    }
+
+    static checkIfBoolLiteral(str, index){
+        if(str.substring(index, index + 4) === "true"){
+            return {
+                isLiteral: true,
+                literalName: "true",
+                offset: 4
+            }
+        }
+        if(str.substring(index, index + 5) === "false"){
+            return {
+                isLiteral: true,
+                literalName: "false",
+                offset: 5
+            }
+        }
+
+        return {
+            isLiteral: false,
+            literalName: "",
+            offset: ""
+        }
+
+    }
+
+    static checkIfNumericLiteral(str, index){
+
+        // let numRe = /^[0-9]$/;
+        // while(true){
+        //
+        //     if(numRe.test(str))
+        //
+        // }
     }
 
 
@@ -80,5 +120,3 @@ class Helper{
 }
 
 module.exports = Helper;
-
-console.log(Helper.checkIfIdentifier("2sdr=4", 0));
