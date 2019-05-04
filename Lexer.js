@@ -4,8 +4,9 @@ class Lexer{
 
     constructor(){
         this.tokens = [];
-        this.whiteSpace = [" ", "\n"];
 
+        this.whiteSpace = [" ", "\n"];
+        this.operators = ["+", "-", "*", "/"]
     }
 
     lex(str){
@@ -16,9 +17,17 @@ class Lexer{
 
             if(Helper.isIn(char,this.whiteSpace)){
                     // pass
-            }else if(Helper.isIn(char,)){
-
+            }else if(Helper.checkIfVarDeclaration(str, index)){
+                this.tokens.push(["Variable declaration", ""]);
+                index += 3;
+                char = str[index];
+                continue;
             }
+            else if(Helper.isIn(char, this.operators)){
+                this.tokens.push([char, ""]);
+            }
+
+            console.log(char);
 
             index++;
             char = str[index];
@@ -28,4 +37,6 @@ class Lexer{
 }
 
 lexer = new Lexer();
-lexer.lex("var a=4;");
+lexer.lex(`var a= 3+4;var x =4;`);
+
+console.log(lexer.tokens);
