@@ -1,5 +1,11 @@
 class Helper{
 
+    /**
+     * Method checking if a given element belongs to the given list.
+     * @param element
+     * @param list
+     * @returns {boolean}
+     */
     static isIn(element, list){
         for(let listElement of list){
             if(element === listElement || element == listElement){
@@ -9,6 +15,12 @@ class Helper{
         return false;
     }
 
+    /**
+     * Method checking if there is a keyword in the code
+     * @param str
+     * @param index
+     * @returns {{isKeyword: boolean, keywordName: string, offset: number}}
+     */
     static checkIfKeyword(str, index){
 
         let keywords = ["if", "else", "for", "var"];
@@ -31,35 +43,25 @@ class Helper{
        }
     }
 
-    static checkIfLiteral(str, index){
-
-        if(this.checkIfBoolLiteral(str,index).isLiteral){
-
-            return this.checkIfBoolLiteral(str,index);
-        }
-
-        return false;
-    }
-
     static checkIfBoolLiteral(str, index){
         if(str.substring(index, index + 4) === "true"){
             return {
                 isLiteral: true,
-                literalName: "true",
+                literalValue: "true",
                 offset: 4
             }
         }
         if(str.substring(index, index + 5) === "false"){
             return {
                 isLiteral: true,
-                literalName: "false",
+                literalValue: "false",
                 offset: 5
             }
         }
 
         return {
             isLiteral: false,
-            literalName: "",
+            literalValue: "",
             offset: ""
         }
 
@@ -67,13 +69,31 @@ class Helper{
 
     static checkIfNumericLiteral(str, index){
 
-        // let numRe = /^[0-9]$/;
-        // while(true){
-        //
-        //     if(numRe.test(str))
-        //
-        // }
+        let numRe = /^[0-9]$/;
+        let num = "";
+        let isLiteral = false;
+
+        while(true){
+
+            if(!numRe.test(str[index])){
+                break;
+            }
+
+            isLiteral = true;
+            num += str[index];
+            index++;
+        }
+
+        return {
+            isLiteral: isLiteral,
+            literalValue: num,
+            offset: num.length
+        }
+
     }
+
+
+
 
 
     /**
@@ -117,6 +137,41 @@ class Helper{
         }
 
     }
+
+    /**
+     * Checking if we go in "string" mode
+     * @param str
+     * @param index
+     * @returns {boolean}
+     */
+    static isString(str, index){
+        if(str[index] === "\""){
+            return true;
+        }
+    }
+
+
+    static scanString(str, index){
+
+            let stringValue = "";
+            console.log(index);
+
+            while(true){
+                if(str[index] === '"'){
+                    break;
+                }
+                stringValue += str[index];
+                index ++;
+            }
+            return {
+                isLiteral: true,
+                literalValue: stringValue,
+                offset: stringValue.length
+            }
+
+    }
 }
 
 module.exports = Helper;
+
+console.log(Helper.scanString(`var tmp= "ab"; if(a>b){varxd = 22}"`, 10));

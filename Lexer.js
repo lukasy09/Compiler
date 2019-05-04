@@ -23,15 +23,32 @@ class Lexer {
                 index += obj.offset;
                 char = str[index];
                 continue;
-            } else if (Helper.checkIfLiteral(str, index).isLiteral) {
-                let obj = Helper.checkIfLiteral(str, index);
-                this.tokens.push(["literal", obj.literalName]);
+
+            } else if (Helper.checkIfBoolLiteral(str, index).isLiteral) {
+                let obj = Helper.checkIfBoolLiteral(str, index);
+                this.tokens.push(["literal", obj.literalValue]);
                 index += obj.offset;
+                char = str[index];
+                continue;
+
+            } else if (Helper.checkIfNumericLiteral(str, index).isLiteral) {
+                let obj = Helper.checkIfNumericLiteral(str, index);
+                this.tokens.push(["literal", obj.literalValue]);
+                index += obj.offset;
+                char = str[index];
+                continue;
+            }
+            else if (Helper.isString(str, index)) {
+                let obj = Helper.scanString(str, index + 1);
+                this.tokens.push(["literal", obj.literalValue]);
+                index += obj.offset + 2;
                 char = str[index];
                 continue;
 
             } else if (Helper.isIn(char, this.operators)) {
                 this.tokens.push(["operator", char]);
+
+
             } else if (Helper.checkIfIdentifier(str, index).isIdentifier) {
                 let obj = Helper.checkIfIdentifier(str, index);
                 this.tokens.push(["identifier", obj.identifierName]);
@@ -48,6 +65,6 @@ class Lexer {
 }
 
 lexer = new Lexer();
-lexer.lex(`var tmp=5; if(a>b){}`);
+lexer.lex(`var tmp= "ab"; if(a>b){varxd = 22}`);
 
 console.log(lexer.tokens);
