@@ -1,0 +1,17 @@
+{
+  "name": "compiler",
+  "version": "1.0.0",
+  "description": "This is a project for \"Theory of Compilers\" @ AGH UST Computer Science 3th Year\"",
+  "main": "Lexer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "compilers"
+  ],
+  "author": "Łukasz Bednarski & Patryk Papiór",
+  "license": "ISC",
+  "dependencies": {
+    "require.js": "^1.0.0"
+  }
+}
