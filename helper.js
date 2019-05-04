@@ -9,6 +9,14 @@ class Helper{
         return false;
     }
 
+    static checkIfKeyWord(str, index){
+        if(this.checkIfVarDeclaration(str, index)){
+            return true;
+        }
+
+
+    }
+
     static checkIfVarDeclaration(str, index){
 
         if(index <= 0){
@@ -25,6 +33,44 @@ class Helper{
 
         return false;
     }
+
+    static checkIfIdentifier(str, index){
+
+        let reStart = /^([A-Za-z_])$/;
+        let identifierName = "";
+        let identifierRe = /^([A-Za-z0-9_]$)/;
+
+        let start = true;
+        let isIdentifier = true;
+
+        while(true){
+            if(start){
+                if(!reStart.test(str[index])){
+                    isIdentifier = false;
+                    break;
+                }
+                start = false;
+                identifierName += str[index];
+                index++;
+
+            }else{
+                if(!identifierRe.test(str[index])){
+                    break;
+                }
+                identifierName += str[index];
+                index++;
+            }
+        }
+
+        return {
+            isIdentifier: isIdentifier,
+            identifierName: identifierName,
+            offset: identifierName.length
+        }
+
+    }
 }
 
 module.exports = Helper;
+
+console.log(Helper.checkIfIdentifier("2sdr=4", 0));

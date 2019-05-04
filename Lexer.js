@@ -5,7 +5,7 @@ class Lexer{
     constructor(){
         this.tokens = [];
 
-        this.whiteSpace = [" ", "\n"];
+        this.separators = [" ", "\t","\n", ".", ",", "(", ")", "{", "}", "[", "]"];
         this.operators = ["+", "-", "*", "/"]
     }
 
@@ -15,19 +15,22 @@ class Lexer{
         let char = str[index];
         while(char !== undefined){
 
-            if(Helper.isIn(char,this.whiteSpace)){
-                    // pass
-            }else if(Helper.checkIfVarDeclaration(str, index)){
-                this.tokens.push(["Variable declaration", ""]);
+            if(Helper.isIn(char,this.separators)){
+                this.tokens.push(["separator", char]);
+            }else if(Helper.checkIfKeyWord(str, index)) {
+                this.tokens.push(["keyword", char]);
                 index += 3;
                 char = str[index];
                 continue;
-            }
-            else if(Helper.isIn(char, this.operators)){
-                this.tokens.push([char, ""]);
+            } else if(Helper.isIn(char, this.operators)){
+                this.tokens.push(["operator", char]);
+            }else if(Helper.checkIfIdentifier(str, index).isIdentifier) {
+
+                let obj = Helper.checkIfIdentifier(str,index);
+                this.tokens.push("IDENTIFIER", obj.identifierName);
+                index += obj.offset;
             }
 
-            console.log(char);
 
             index++;
             char = str[index];
@@ -37,6 +40,6 @@ class Lexer{
 }
 
 lexer = new Lexer();
-lexer.lex(`var a= 3+4;var x =4;`);
+lexer.lex(`var ax= 3+4;var xx =4;`);
 
 console.log(lexer.tokens);
