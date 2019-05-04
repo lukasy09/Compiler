@@ -1,36 +1,40 @@
 let Helper = require("./helper.js");
 
-class Lexer{
+class Lexer {
 
-    constructor(){
+    constructor() {
         this.tokens = [];
 
-        this.separators = [" ", "\t","\n", ".", ",", "(", ")", "{", "}", "[", "]"];
+        this.separators = [" ", "\t", "\n", ".", ",", "(", ")", "{", "}", "[", "]"];
         this.operators = ["+", "-", "*", "/"]
     }
 
-    lex(str){
+    lex(str) {
 
         let index = 0;
         let char = str[index];
-        while(char !== undefined){
+        while (char !== undefined) {
 
-            if(Helper.isIn(char,this.separators)){
+            if (Helper.isIn(char, this.separators)) {
                 this.tokens.push(["separator", char]);
-            }else if(Helper.checkIfKeyWord(str, index)) {
-                this.tokens.push(["keyword", char]);
-                index += 3;
+            } else if (Helper.checkIfKeyword(str, index).isKeyword) {
+                let obj = Helper.checkIfKeyword(str, index);
+                this.tokens.push(["keyword", obj.keywordName]);
+                index += obj.offset;
                 char = str[index];
                 continue;
-            } else if(Helper.isIn(char, this.operators)){
+            } else if (Helper.checkIfLiteral(str, index)) {
+
+
+            } else if (Helper.isIn(char, this.operators)) {
                 this.tokens.push(["operator", char]);
-            }else if(Helper.checkIfIdentifier(str, index).isIdentifier) {
-
-                let obj = Helper.checkIfIdentifier(str,index);
-                this.tokens.push("IDENTIFIER", obj.identifierName);
+            } else if (Helper.checkIfIdentifier(str, index).isIdentifier) {
+                let obj = Helper.checkIfIdentifier(str, index);
+                this.tokens.push(["identifier", obj.identifierName]);
                 index += obj.offset;
+                char = str[index];
+                continue;
             }
-
 
             index++;
             char = str[index];
@@ -40,6 +44,6 @@ class Lexer{
 }
 
 lexer = new Lexer();
-lexer.lex(`var ax= 3+4;var xx =4;`);
+lexer.lex(`var xTest=5; if(true){}`);
 
 console.log(lexer.tokens);

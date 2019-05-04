@@ -9,31 +9,39 @@ class Helper{
         return false;
     }
 
-    static checkIfKeyWord(str, index){
-        if(this.checkIfVarDeclaration(str, index)){
-            return true;
+    static checkIfKeyword(str, index){
+
+        let keywords = ["if", "else", "for", "var"];
+        let potentialKeyword = "";
+
+        let keywordCharRe = /^[a-z]$/
+
+        while(true){
+            if(!keywordCharRe.test(str[index])){
+                break;
+            }
+            potentialKeyword += str[index];
+            index++;
         }
 
+       return {
+            isKeyword: Helper.isIn(potentialKeyword, keywords),
+            keywordName: potentialKeyword,
+            offset: potentialKeyword.length
+       }
+    }
+
+    static checkIfLiteral(){
 
     }
 
-    static checkIfVarDeclaration(str, index){
 
-        if(index <= 0){
-
-            if(str[index] === "v" && str[index+1] === "a" && str[index+2] === "r" && str[index +3] === " "){
-                return true;
-            }
-        }else{
-            let prevSigns = [" ", "", ";", "\n"];
-            if(this.isIn(str[index-1], prevSigns) && str[index] === "v" && str[index+1] === "a" && str[index+2] === "r" && str[index +3] === " "){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /**
+     * Method checking if a part of string may be classified as identifier
+     * @param str
+     * @param index
+     * @returns {{isIdentifier: boolean, identifierName: string, offset: number}}
+     */
     static checkIfIdentifier(str, index){
 
         let reStart = /^([A-Za-z_])$/;
