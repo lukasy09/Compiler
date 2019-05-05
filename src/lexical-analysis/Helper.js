@@ -154,7 +154,6 @@ class Helper{
     static scanString(str, index){
 
             let stringValue = "";
-            console.log(index);
 
             while(true){
                 if(str[index] === '"'){
@@ -174,4 +173,4 @@ class Helper{
 
 module.exports = Helper;
 
-console.log(Helper.scanString(`var tmp= "ab"; if(a>b){varxd = 22}"`, 10));
+//console.log(Helper.scanString(`var tmp= "ab"; if(a>b){varxd = 22}"`, 10));

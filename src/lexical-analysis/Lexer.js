@@ -1,4 +1,5 @@
-let Helper = require("./helper.js");
+let Helper = require("./Helper.js");
+let loadContentFromFile = require('../others/FileLoader');
 
 class Lexer {
 
@@ -63,8 +64,11 @@ class Lexer {
         }
     }
 }
+module.exports = Lexer;
 
-lexer = new Lexer();
-lexer.lex(`var tmp= "ab"; if(a>b){varxd = 22}`);
+let lexer = new Lexer();
 
+let codeStr = loadContentFromFile("../../assets/test.jd");
+
+lexer.lex(codeStr);
 console.log(lexer.tokens);
