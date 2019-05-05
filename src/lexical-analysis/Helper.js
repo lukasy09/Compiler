@@ -1,5 +1,5 @@
 
-const separators = [" ", "\t", "\n", ".", ",", ";", "(", ")", "{", "}", "[", "]"];
+const separators = [" ", "\t", "\n", "\r", ".", ",", ";", "(", ")", "{", "}", "[", "]"];
 const operators = ["+", "-", "*", "/", "=", "==", "<", ">"]
 
 class Helper{
@@ -75,7 +75,7 @@ class Helper{
      */
     static checkIfKeyword(str, index){
 
-        let keywords = ["if", "else", "for", "var"];
+        let keywords = ["if", "else", "for", "var", "while"];
         let potentialKeyword = "";
 
         let keywordCharRe = /^[a-z]$/

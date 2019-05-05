@@ -5,9 +5,6 @@ class Lexer {
 
     constructor() {
         this.tokens = [];
-
-        this.separators = [" ", "\t", "\n", ".", ",", ";", "(", ")", "{", "}", "[", "]"];
-        this.operators = ["+", "-", "*", "/", "=", "==", "<", ">"];
     }
 
     lex(str) {
@@ -18,7 +15,7 @@ class Lexer {
         while (char !== undefined) {
 
             if (Helper.isSeparator(str, index)) {
-                this.tokens.push(["separator", str[index]]);
+                this.tokens.push(["separator", char]);
                 index++;
                 char = str[index];
                 continue;
@@ -26,7 +23,6 @@ class Lexer {
             } else if (Helper.isOperator(str, index)) {
                 obj = Helper.scanOperator(str, index);
                 this.tokens.push(["operator", obj.operatorValue]);
-
 
             } else if (Helper.checkIfKeyword(str, index).isKeyword) {
                 obj = Helper.checkIfKeyword(str, index);
@@ -55,6 +51,7 @@ class Lexer {
             }else{
                 index++;
                 char = str[index];
+                console.log(char + "   " + "xddd")
             }
 
             index += obj.offset;
@@ -66,8 +63,6 @@ class Lexer {
 module.exports = Lexer;
 
 let lexer = new Lexer();
-
 let codeStr = loadContentFromFile("../../assets/test.jd");
-
 lexer.lex(codeStr);
 console.log(lexer.tokens);
