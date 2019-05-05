@@ -1,3 +1,7 @@
+
+const separators = [" ", "\t", "\n", ".", ",", ";", "(", ")", "{", "}", "[", "]"];
+const operators = ["+", "-", "*", "/", "=", "==", "<", ">"]
+
 class Helper{
 
     /**
@@ -14,6 +18,54 @@ class Helper{
         }
         return false;
     }
+    /**
+     * Checking if a sign is a separator
+     * @param str
+     * @param index
+     * @return {boolean}
+     */
+    static isSeparator(str, index){
+        return this.isIn(str[index], separators);
+    }
+
+    /**
+     * Checking if a sign is an operator
+     * @param str
+     * @param index
+     * @return {boolean}
+     */
+    static isOperator(str, index){
+        return this.isIn(str[index], operators);
+    }
+
+    /**
+     *
+     * @param str
+     * @param index
+     * @return {{operatorValue: string, offset: number}}
+     */
+    static scanOperator(str, index){
+        let operatorValue = "";
+
+        if(this.isIn(str[index], operators)){
+
+            while(true){
+                if(!Helper.isIn(str[index], operators)){
+                    break;
+                }
+
+                operatorValue += str[index];
+                index ++;
+            }
+            return {
+                operatorValue: operatorValue,
+                offset: operatorValue.length
+            }
+        }
+    }
+
+
+
 
     /**
      * Method checking if there is a keyword in the code
