@@ -1,6 +1,8 @@
 let fs = require('fs');
 
-export function loadContentFromFile(path) {
+function loadContentFromFile(path) {
 
    return fs.readFileSync(path, 'utf8');
 }
+
+module.exports = loadContentFromFile;
