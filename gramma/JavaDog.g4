@@ -9,13 +9,14 @@ FUNCTION      : 'func'       ;
 IF            : 'if'         ;
 INTEGER       : 'Integer'    ;
 REAL          : 'Real'       ;
-VAR           : 'make'       ;
+VAR           : 'claim'      ;
 STRING        : 'String'     ;
-BEGIN_MARKUP  : '<JD '       ;
-END_MARKUP    : ' JD>'       ;
+BEGIN_MARKUP  : '<JD'       ;
+END_MARKUP    : 'JD>'       ;
 // Operators
-ASSIGN        : ':='         ;
-EQUAL         : '='          ;
+ASSIGN        : '='          ;
+COMMA         : ','          ;
+EQUAL         : '=='         ;
 PLUS          : '+'          ;
 MINUS         : '-'          ;
 STAR          : '*'          ;
@@ -23,7 +24,12 @@ SLASH         : '/'          ;
 SEMICOLON     : ';'          ;
 LPAREN        : '('          ;
 RPAREN        : ')'          ;
+LCURL         : '{'          ;
+RCURL         : '}'          ;
+DOT           : '.'          ;
 
+
+// Atomic values definition
 identifier
    : REGEX_ID
    ;
@@ -42,7 +48,84 @@ unsignedInteger
 unsignedReal
     : REGEX_REAL
     ;
+
 // Program Structure
-program
-    :  BEGIN_MARKUP block END_MARKUP
+root
+    :  BEGIN_MARKUP body END_MARKUP
     ;
+
+body
+    : ( declaration | statement )*
+    ;
+
+// declaration
+declaration
+    : varDeclaration  | functionDeclaration
+    ;
+
+varDeclaration
+    : VAR identifier SEMICOLON
+    ;
+
+functionDeclaration
+    : FUNCTION identifier parameters LCURL body RCURL
+    ;
+
+parameters
+    : LPAREN (singleParameter (COMMA singleParameter)*)* RPAREN
+    ;
+
+singleParameter
+    : identifier
+    ;
+
+statement
+    : assignmentStatement | functionCall
+    ;
+
+assignmentStatement
+    : VAR identifier ASSIGN expression SEMICOLON | identifier ASSIGN expression SEMICOLON
+    ;
+
+expression
+    : expressionOperand (operator expressionOperand)*
+    ;
+
+expressionOperand
+    : value | functionCall | identifier
+    ;
+
+functionCall
+    : identifier parameters SEMICOLON
+    ;
+
+value
+    : string | unsignedNumber
+    ;
+operator
+    : (STAR | SLASH | PLUS | MINUS)
+    ;
+
+REGEX_ID      : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+              ;
+
+REGEX_INT     : ('0'..'9')+
+              ;
+
+REGEX_REAL    : ('0'..'9')+ DOT ('0'..'9')+
+              ;
+
+REGEX_STRING  : '\'' ('\'\'' | ~ ('\''))* '\''
+              ;
+
+REGEX_WS      : ( ' '
+              |  '\t'
+              |  '\f'
+              |  (  '\r\n'
+                 |  '\r'
+                 |  '\n'
+                 )
+              )  -> skip
+              ;
+
+WS : (' ' | '\t'|'\n' | '\r')+ -> channel(HIDDEN);
