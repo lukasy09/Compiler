@@ -11,8 +11,8 @@ INTEGER       : 'Integer'    ;
 REAL          : 'Real'       ;
 VAR           : 'claim'      ;
 STRING        : 'String'     ;
-BEGIN_MARKUP  : '<JD'       ;
-END_MARKUP    : 'JD>'       ;
+BEGIN_MARKUP  : '<?JD'       ;
+END_MARKUP    : '?JD>'       ;
 // Operators
 ASSIGN        : '='          ;
 COMMA         : ','          ;
@@ -30,9 +30,11 @@ DOT           : '.'          ;
 
 
 // Atomic values definition
+
 identifier
    : REGEX_ID
    ;
+
 string
     : STRING_REGEX
     ;
@@ -60,17 +62,18 @@ body
 
 // declaration
 declaration
-    : varDeclaration  | functionDeclaration
+    : varDeclaration
     ;
 
 varDeclaration
     : VAR identifier SEMICOLON
     ;
 
-functionDeclaration
+functionDefinition
     : FUNCTION identifier parameters LCURL body RCURL
     ;
 
+// Provides a list of parameters passed into our function definition e.g func foo(str_1, num_1,str_2) { //body... }
 parameters
     : LPAREN (singleParameter (COMMA singleParameter)*)* RPAREN
     ;
@@ -80,11 +83,11 @@ singleParameter
     ;
 
 statement
-    : assignmentStatement | functionCall
+    : (assignmentStatement | functionCall | functionDefinition)
     ;
 
 assignmentStatement
-    : VAR identifier ASSIGN expression SEMICOLON | identifier ASSIGN expression SEMICOLON
+    : VAR identifier ASSIGN expression SEMICOLON | identifier ASSIGN expression SEMICOLON | VAR identifier ASSIGN functionCall SEMICOLON | identifier ASSIGN functionCall SEMICOLON
     ;
 
 expression
@@ -96,12 +99,22 @@ expressionOperand
     ;
 
 functionCall
-    : identifier parameters SEMICOLON
+    : identifier arguments
+    ;
+
+arguments
+    : LPAREN (singleArgument (COMMA singleArgument)*)* RPAREN
+    ;
+
+
+singleArgument
+    : identifier | value
     ;
 
 value
     : string | unsignedNumber
     ;
+
 operator
     : (STAR | SLASH | PLUS | MINUS)
     ;
@@ -115,7 +128,7 @@ REGEX_INT     : ('0'..'9')+
 REGEX_REAL    : ('0'..'9')+ DOT ('0'..'9')+
               ;
 
-REGEX_STRING  : '\'' ('\'\'' | ~ ('\''))* '\''
+STRING_REGEX  : '\'' ('\'\'' | ~ ('\''))* '\''
               ;
 
 REGEX_WS      : ( ' '
