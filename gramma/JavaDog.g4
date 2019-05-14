@@ -7,6 +7,7 @@ grammar JavaDog;
 AND           : 'and'        ;
 FUNCTION      : 'func'       ;
 IF            : 'if'         ;
+ELSE          : 'else'       ;
 WHILE         : 'while'      ;
 INTEGER       : 'Integer'    ;
 RETURN        : 'return'     ;
@@ -15,6 +16,7 @@ VAR           : 'claim'      ;
 STRING        : 'String'     ;
 BEGIN_MARKUP  : '<?JD'       ;
 END_MARKUP    : '?JD>'       ;
+
 // Operators
 ASSIGN        : '='          ;
 COMMA         : ','          ;
@@ -63,6 +65,10 @@ body
     : ( declaration | statement | functionDefinition )*
     ;
 
+functionBody
+    : ( declaration | statement)*
+    ;
+
 // declaration
 declaration
     : varDeclaration
@@ -73,7 +79,7 @@ varDeclaration
     ;
 
 functionDefinition
-    : FUNCTION identifier parameters LCURL body RCURL
+    : FUNCTION identifier parameters LCURL functionBody RCURL
     ;
 
 // Provides a list of parameters passed into our function definition e.g func foo(str_1, num_1,str_2) { //body... }
@@ -86,7 +92,7 @@ singleParameter
     ;
 
 statement
-    : (assignmentStatement | functionCall | instruction)
+    : (assignmentStatement | functionCall | instruction | returnStatement)
     ;
 
 assignmentStatement
@@ -98,16 +104,21 @@ instruction
     ;
 
 ifStatement
-    : IF LPAREN (boolValue | expression) RPAREN LCURL (statement)* RCURL
+    : IF LPAREN (boolValue | expression) RPAREN LCURL (statement)* RCURL (ELSE LCURL (statement)* RCURL)?
     ;
 
 whileLoop
     : WHILE LPAREN boolValue RPAREN LCURL (statement)* RCURL
     ;
 
-boolValue
-    : value | expressionOperand
+returnStatement
+    : RETURN (identifier | value | expression) SEMICOLON
     ;
+
+boolValue
+    : value | expression
+    ;
+
 expression
     : expressionOperand (operator expressionOperand)*
     ;
@@ -117,7 +128,7 @@ expressionOperand
     ;
 
 functionCall
-    : identifier arguments SEMICOLON
+    : identifier arguments (SEMICOLON)*
     ;
 
 arguments

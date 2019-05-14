@@ -52,6 +52,12 @@ public interface JavaDogVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBody(JavaDogParser.BodyContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#functionBody}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionBody(JavaDogParser.FunctionBodyContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link JavaDogParser#declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -93,6 +99,36 @@ public interface JavaDogVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAssignmentStatement(JavaDogParser.AssignmentStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#instruction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInstruction(JavaDogParser.InstructionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#ifStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStatement(JavaDogParser.IfStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#whileLoop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileLoop(JavaDogParser.WhileLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#returnStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnStatement(JavaDogParser.ReturnStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#boolValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolValue(JavaDogParser.BoolValueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JavaDogParser#expression}.
 	 * @param ctx the parse tree

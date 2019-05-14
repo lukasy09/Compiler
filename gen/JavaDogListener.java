@@ -77,6 +77,16 @@ public interface JavaDogListener extends ParseTreeListener {
 	 */
 	void exitBody(JavaDogParser.BodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#functionBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionBody(JavaDogParser.FunctionBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#functionBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionBody(JavaDogParser.FunctionBodyContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link JavaDogParser#declaration}.
 	 * @param ctx the parse tree
 	 */
@@ -146,6 +156,56 @@ public interface JavaDogListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssignmentStatement(JavaDogParser.AssignmentStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void enterInstruction(JavaDogParser.InstructionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#instruction}.
+	 * @param ctx the parse tree
+	 */
+	void exitInstruction(JavaDogParser.InstructionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStatement(JavaDogParser.IfStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStatement(JavaDogParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileLoop(JavaDogParser.WhileLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileLoop(JavaDogParser.WhileLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#returnStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnStatement(JavaDogParser.ReturnStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#returnStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnStatement(JavaDogParser.ReturnStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#boolValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolValue(JavaDogParser.BoolValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#boolValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolValue(JavaDogParser.BoolValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JavaDogParser#expression}.
 	 * @param ctx the parse tree
