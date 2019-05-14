@@ -123,13 +123,13 @@ public class JavaDogBaseListener implements JavaDogListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionDeclaration(JavaDogParser.FunctionDeclarationContext ctx) { }
+	@Override public void enterFunctionDefinition(JavaDogParser.FunctionDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionDeclaration(JavaDogParser.FunctionDeclarationContext ctx) { }
+	@Override public void exitFunctionDefinition(JavaDogParser.FunctionDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -214,6 +214,30 @@ public class JavaDogBaseListener implements JavaDogListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionCall(JavaDogParser.FunctionCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArguments(JavaDogParser.ArgumentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArguments(JavaDogParser.ArgumentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSingleArgument(JavaDogParser.SingleArgumentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingleArgument(JavaDogParser.SingleArgumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

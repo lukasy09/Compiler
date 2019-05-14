@@ -97,15 +97,15 @@ public interface JavaDogListener extends ParseTreeListener {
 	 */
 	void exitVarDeclaration(JavaDogParser.VarDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JavaDogParser#functionDeclaration}.
+	 * Enter a parse tree produced by {@link JavaDogParser#functionDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunctionDeclaration(JavaDogParser.FunctionDeclarationContext ctx);
+	void enterFunctionDefinition(JavaDogParser.FunctionDefinitionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JavaDogParser#functionDeclaration}.
+	 * Exit a parse tree produced by {@link JavaDogParser#functionDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunctionDeclaration(JavaDogParser.FunctionDeclarationContext ctx);
+	void exitFunctionDefinition(JavaDogParser.FunctionDefinitionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JavaDogParser#parameters}.
 	 * @param ctx the parse tree
@@ -176,6 +176,26 @@ public interface JavaDogListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionCall(JavaDogParser.FunctionCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#arguments}.
+	 * @param ctx the parse tree
+	 */
+	void enterArguments(JavaDogParser.ArgumentsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#arguments}.
+	 * @param ctx the parse tree
+	 */
+	void exitArguments(JavaDogParser.ArgumentsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#singleArgument}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingleArgument(JavaDogParser.SingleArgumentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#singleArgument}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingleArgument(JavaDogParser.SingleArgumentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JavaDogParser#value}.
 	 * @param ctx the parse tree

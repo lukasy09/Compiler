@@ -64,11 +64,11 @@ public interface JavaDogVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarDeclaration(JavaDogParser.VarDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JavaDogParser#functionDeclaration}.
+	 * Visit a parse tree produced by {@link JavaDogParser#functionDefinition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionDeclaration(JavaDogParser.FunctionDeclarationContext ctx);
+	T visitFunctionDefinition(JavaDogParser.FunctionDefinitionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JavaDogParser#parameters}.
 	 * @param ctx the parse tree
@@ -111,6 +111,18 @@ public interface JavaDogVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunctionCall(JavaDogParser.FunctionCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#arguments}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArguments(JavaDogParser.ArgumentsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#singleArgument}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingleArgument(JavaDogParser.SingleArgumentContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JavaDogParser#value}.
 	 * @param ctx the parse tree

@@ -7,7 +7,9 @@ grammar JavaDog;
 AND           : 'and'        ;
 FUNCTION      : 'func'       ;
 IF            : 'if'         ;
+WHILE         : 'while'      ;
 INTEGER       : 'Integer'    ;
+RETURN        : 'return'     ;
 REAL          : 'Real'       ;
 VAR           : 'claim'      ;
 STRING        : 'String'     ;
@@ -17,6 +19,8 @@ END_MARKUP    : '?JD>'       ;
 ASSIGN        : '='          ;
 COMMA         : ','          ;
 EQUAL         : '=='         ;
+LESS_THAN     : '<'          ;
+MORE_THAN     : '>'          ;
 PLUS          : '+'          ;
 MINUS         : '-'          ;
 STAR          : '*'          ;
@@ -27,7 +31,6 @@ RPAREN        : ')'          ;
 LCURL         : '{'          ;
 RCURL         : '}'          ;
 DOT           : '.'          ;
-
 
 // Atomic values definition
 
@@ -44,11 +47,11 @@ unsignedNumber
     ;
 
 unsignedInteger
-    : REGEX_INT
+    : INT_REGEX
     ;
 
 unsignedReal
-    : REGEX_REAL
+    : REAL_REGEX
     ;
 
 // Program Structure
@@ -57,7 +60,7 @@ root
     ;
 
 body
-    : ( declaration | statement )*
+    : ( declaration | statement | functionDefinition )*
     ;
 
 // declaration
@@ -83,13 +86,28 @@ singleParameter
     ;
 
 statement
-    : (assignmentStatement | functionCall | functionDefinition)
+    : (assignmentStatement | functionCall | instruction)
     ;
 
 assignmentStatement
     : VAR identifier ASSIGN expression SEMICOLON | identifier ASSIGN expression SEMICOLON | VAR identifier ASSIGN functionCall SEMICOLON | identifier ASSIGN functionCall SEMICOLON
     ;
 
+instruction
+    : ifStatement | whileLoop
+    ;
+
+ifStatement
+    : IF LPAREN (boolValue | expression) RPAREN LCURL (statement)* RCURL
+    ;
+
+whileLoop
+    : WHILE LPAREN boolValue RPAREN LCURL (statement)* RCURL
+    ;
+
+boolValue
+    : value | expressionOperand
+    ;
 expression
     : expressionOperand (operator expressionOperand)*
     ;
@@ -99,7 +117,7 @@ expressionOperand
     ;
 
 functionCall
-    : identifier arguments
+    : identifier arguments SEMICOLON
     ;
 
 arguments
@@ -116,16 +134,16 @@ value
     ;
 
 operator
-    : (STAR | SLASH | PLUS | MINUS)
+    : (STAR | SLASH | PLUS | MINUS | LESS_THAN | MORE_THAN | EQUAL)
     ;
 
 REGEX_ID      : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
               ;
 
-REGEX_INT     : ('0'..'9')+
+INT_REGEX     : ('0'..'9')+
               ;
 
-REGEX_REAL    : ('0'..'9')+ DOT ('0'..'9')+
+REAL_REGEX    : ('0'..'9')+ DOT ('0'..'9')+
               ;
 
 STRING_REGEX  : '\'' ('\'\'' | ~ ('\''))* '\''
