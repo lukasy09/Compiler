@@ -14,6 +14,7 @@ RETURN        : 'return'     ;
 REAL          : 'Real'       ;
 VAR           : 'claim'      ;
 STRING        : 'String'     ;
+COMMENT_SIGN  : '#'          ;
 BEGIN_MARKUP  : '<?JD'       ;
 END_MARKUP    : '?JD>'       ;
 
@@ -62,7 +63,11 @@ root
     ;
 
 body
-    : ( declaration | statement | functionDefinition )*
+    : ( declaration | statement | functionDefinition | comment)*
+    ;
+
+comment
+    : COMMENT_SIGN (REGEX_ID)* COMMENT_SIGN
     ;
 
 functionBody
@@ -92,11 +97,11 @@ singleParameter
     ;
 
 statement
-    : (assignmentStatement | functionCall | instruction | returnStatement)
+    : (assignmentStatement | functionCall | instruction | returnStatement) SEMICOLON
     ;
 
 assignmentStatement
-    : VAR identifier ASSIGN expression SEMICOLON | identifier ASSIGN expression SEMICOLON | VAR identifier ASSIGN functionCall SEMICOLON | identifier ASSIGN functionCall SEMICOLON
+    : VAR identifier ASSIGN expression | identifier ASSIGN expression | VAR identifier ASSIGN functionCall | identifier ASSIGN functionCall
     ;
 
 instruction
@@ -112,7 +117,7 @@ whileLoop
     ;
 
 returnStatement
-    : RETURN (identifier | value | expression) SEMICOLON
+    : RETURN (identifier | value | expression)
     ;
 
 boolValue
@@ -169,5 +174,8 @@ REGEX_WS      : ( ' '
                  )
               )  -> skip
               ;
+
+REGEX_COMMENT      : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+                   ;
 
 WS : (' ' | '\t'|'\n' | '\r')+ -> channel(HIDDEN);
