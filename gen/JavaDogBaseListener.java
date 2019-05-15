@@ -99,6 +99,18 @@ public class JavaDogBaseListener implements JavaDogListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterComment(JavaDogParser.CommentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComment(JavaDogParser.CommentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunctionBody(JavaDogParser.FunctionBodyContext ctx) { }
 	/**
 	 * {@inheritDoc}

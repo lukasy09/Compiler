@@ -77,6 +77,16 @@ public interface JavaDogListener extends ParseTreeListener {
 	 */
 	void exitBody(JavaDogParser.BodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link JavaDogParser#comment}.
+	 * @param ctx the parse tree
+	 */
+	void enterComment(JavaDogParser.CommentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JavaDogParser#comment}.
+	 * @param ctx the parse tree
+	 */
+	void exitComment(JavaDogParser.CommentContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link JavaDogParser#functionBody}.
 	 * @param ctx the parse tree
 	 */

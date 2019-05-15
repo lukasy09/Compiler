@@ -52,6 +52,12 @@ public interface JavaDogVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBody(JavaDogParser.BodyContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link JavaDogParser#comment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComment(JavaDogParser.CommentContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link JavaDogParser#functionBody}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
