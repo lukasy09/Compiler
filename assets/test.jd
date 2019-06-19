@@ -1,0 +1,8 @@
+var tmp ="abcd"
+var a=5;
+if(a>=1){
+    print("YES");
+}
+while(a<100){
+    print(a);
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
 # Compiled class file
@@ -121,3 +122,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+=======
+.idea
+node_modules
+>>>>>>> 3235ac63c4de40250cb4aadd8ed1a8ab076330e0
