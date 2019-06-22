@@ -75,7 +75,16 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
     public String visitFunctionDefinition(JavaDogParser.FunctionDefinitionContext ctx) {
-        return super.visitFunctionDefinition(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\n");
+        stringBuilder.append("function");
+        stringBuilder.append(" ");
+        stringBuilder.append(ctx.identifier().getText());
+        stringBuilder.append(ctx.parameters().getText());
+        stringBuilder.append("{");
+        stringBuilder.append(this.visitFunctionBody(ctx.functionBody()));
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 
     @Override
@@ -95,7 +104,20 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
     public String visitAssignmentStatement(JavaDogParser.AssignmentStatementContext ctx) {
-        return super.visitAssignmentStatement(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("var");
+        stringBuilder.append(" ");
+        stringBuilder.append(ctx.identifier().getText());
+        stringBuilder.append(" ");
+        stringBuilder.append(ctx.ASSIGN());
+        stringBuilder.append(" ");
+        if(ctx.expression() != null){
+            stringBuilder.append(ctx.expression().getText());
+        }else{
+            stringBuilder.append(ctx.functionCall().getText());
+        }
+        stringBuilder.append(";");
+        return stringBuilder.toString();
     }
 
     @Override

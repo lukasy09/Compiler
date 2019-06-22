@@ -1,6 +1,7 @@
 <?JD
 
-claim a;
-claim ad; #test comment#
-
+func myFunction(par1, par2){
+    claim c= anotherFunction(3,3);
+    claim d;
+}
 ?JD>
