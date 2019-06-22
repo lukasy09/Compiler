@@ -7,10 +7,12 @@ func factorial(n){
     claim condition1 = n==1;
     claim condition2 = n==0;
 
-    if(condition1 and condition2){
+    if(condition1 or condition2){
         return 1;
     };
     claim next = n-1;
-    return factorial(next);
+    return factorial(next) * n;
 }
+
+claim result = factorial(3);
 ?JD>
