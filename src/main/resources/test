@@ -1,7 +1,11 @@
 <?JD
 
 claim ax = 2+3;
+claim a = 3;
 
+func add(a, b) {
+    return a + b;
+}
 func factorial(n){
 
     claim condition1 = n==1;
@@ -13,6 +17,10 @@ func factorial(n){
     claim next = n-1;
     return factorial(next) * n;
 }
-
+while (a > 5) {
+    claim xd = 5;
+    a = a + 1;
+    ax = factorial(5);
+}
 claim result = factorial(3);
 ?JD>

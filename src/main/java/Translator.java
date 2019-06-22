@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
@@ -99,16 +101,31 @@ public class Translator extends JavaDogBaseVisitor<String> {
         return super.visitSingleParameter(ctx);
     }
 
-    @Override
-    public String visitStatement(JavaDogParser.StatementContext ctx) {
-        return super.visitStatement(ctx);
+    public String visitStatement(List<JavaDogParser.StatementContext> ctxList) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (JavaDogParser.StatementContext ctx: ctxList) {
+            for (int i = 0; i < ctx.getChildCount(); i++) {
+                if (ctx.getChild(i) instanceof JavaDogParser.AssignmentStatementContext) {
+                    stringBuilder.append(this.visitAssignmentStatement((JavaDogParser.AssignmentStatementContext) ctx.getChild(i)));
+                } else if (ctx.getChild(i) instanceof JavaDogParser.FunctionCallContext) {
+                    stringBuilder.append(this.visitFunctionCall((JavaDogParser.FunctionCallContext) ctx.getChild(i)));
+                } else if (ctx.getChild(i) instanceof JavaDogParser.InstructionContext) {
+                    stringBuilder.append(this.visitInstruction((JavaDogParser.InstructionContext) ctx.getChild(i)));
+                } else if (ctx.getChild(i) instanceof JavaDogParser.ReturnStatementContext) {
+                    stringBuilder.append(this.visitReturnStatement((JavaDogParser.ReturnStatementContext) ctx.getChild(i)));
+                }
+            }
+        }
+        return stringBuilder.toString();
     }
 
     @Override
     public String visitAssignmentStatement(JavaDogParser.AssignmentStatementContext ctx) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("var");
-        stringBuilder.append(" ");
+        if (ctx.VAR() != null) {
+            stringBuilder.append("var");
+            stringBuilder.append(" ");
+        }
         stringBuilder.append(ctx.identifier().getText());
         stringBuilder.append(" ");
         stringBuilder.append(ctx.ASSIGN());
@@ -151,7 +168,16 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
     public String visitWhileLoop(JavaDogParser.WhileLoopContext ctx) {
-        return super.visitWhileLoop(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("while");
+        stringBuilder.append("(");
+        stringBuilder.append(visitBoolValue(ctx.boolValue()));
+        stringBuilder.append(")");
+        stringBuilder.append("{");
+        stringBuilder.append("\n");
+        stringBuilder.append(this.visitStatement(ctx.statement()));
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 
     @Override
