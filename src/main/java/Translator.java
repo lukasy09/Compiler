@@ -189,7 +189,6 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
         stringBuilder.append(" ");
         stringBuilder.append(ctx.expressionOperand().get(1).getText());
-        stringBuilder.append(";");
         return stringBuilder.toString();
     }
 
