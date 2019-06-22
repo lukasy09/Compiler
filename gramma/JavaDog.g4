@@ -5,6 +5,7 @@
 grammar JavaDog;
 // Keywords
 AND           : 'and'        ;
+OR            : 'or'         ;
 FUNCTION      : 'func'       ;
 IF            : 'if'         ;
 ELSE          : 'else'       ;
@@ -17,6 +18,8 @@ STRING        : 'String'     ;
 COMMENT_SIGN  : '#'          ;
 BEGIN_MARKUP  : '<?JD'       ;
 END_MARKUP    : '?JD>'       ;
+TRUE          : 'true'       ;
+FALSE         : 'false'      ;
 
 // Operators
 ASSIGN        : '='          ;
@@ -117,11 +120,11 @@ whileLoop
     ;
 
 returnStatement
-    : RETURN (identifier | value | expression)
+    : RETURN (identifier | value | expression | functionCall)
     ;
 
 boolValue
-    : value | expression
+    : TRUE | FALSE | expressionOperand operator expressionOperand
     ;
 
 expression
@@ -150,7 +153,7 @@ value
     ;
 
 operator
-    : (STAR | SLASH | PLUS | MINUS | LESS_THAN | MORE_THAN | EQUAL)
+    : (STAR | SLASH | PLUS | MINUS | LESS_THAN | MORE_THAN | EQUAL | AND | OR)
     ;
 
 REGEX_ID      : ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*

@@ -1,7 +1,16 @@
 <?JD
 
-func myFunction(par1, par2){
-    claim c= anotherFunction(3,3);
-    claim d;
+claim ax = 2+3;
+
+func factorial(n){
+
+    claim condition1 = n==1;
+    claim condition2 = n==0;
+
+    if(condition1 and condition2){
+        return 1;
+    };
+    claim next = n-1;
+    return factorial(next);
 }
 ?JD>

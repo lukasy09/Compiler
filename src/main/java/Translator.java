@@ -60,6 +60,7 @@ public class Translator extends JavaDogBaseVisitor<String> {
     public String visitDeclaration(JavaDogParser.DeclarationContext ctx) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(visitVarDeclaration(ctx.varDeclaration()));
+        stringBuilder.append("\n");
         return stringBuilder.toString();
     }
 
@@ -82,6 +83,7 @@ public class Translator extends JavaDogBaseVisitor<String> {
         stringBuilder.append(ctx.identifier().getText());
         stringBuilder.append(ctx.parameters().getText());
         stringBuilder.append("{");
+        stringBuilder.append("\n");
         stringBuilder.append(this.visitFunctionBody(ctx.functionBody()));
         stringBuilder.append("}");
         return stringBuilder.toString();
@@ -117,6 +119,7 @@ public class Translator extends JavaDogBaseVisitor<String> {
             stringBuilder.append(ctx.functionCall().getText());
         }
         stringBuilder.append(";");
+        stringBuilder.append("\n");
         return stringBuilder.toString();
     }
 
@@ -127,7 +130,23 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
     public String visitIfStatement(JavaDogParser.IfStatementContext ctx) {
-        return super.visitIfStatement(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("if");
+        stringBuilder.append("(");
+        if(ctx.boolValue() != null){
+            stringBuilder.append(this.visitBoolValue(ctx.boolValue()));
+        }
+        if(ctx.expression() != null){
+            stringBuilder.append(ctx.expression().getText());
+        }
+        stringBuilder.append(")");
+        stringBuilder.append("{");
+        for(int i =0; i<ctx.statement().size(); i++){
+            stringBuilder.append(this.visitStatement(ctx.statement(i)));
+        }
+        stringBuilder.append("}");
+
+        return stringBuilder.toString();
     }
 
     @Override
@@ -137,18 +156,47 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
     public String visitReturnStatement(JavaDogParser.ReturnStatementContext ctx) {
-        return super.visitReturnStatement(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("return");
+        stringBuilder.append(" ");
+
+        if(ctx.expression() != null){
+            stringBuilder.append(ctx.expression().getText());
+        }else if(ctx.identifier() != null){
+            stringBuilder.append(ctx.identifier().getText());
+        }else if(ctx.value() != null){
+            stringBuilder.append(ctx.value().getText());
+        }else{
+            stringBuilder.append(ctx.functionCall().getText());
+        }
+        stringBuilder.append(";");
+        return stringBuilder.toString();
     }
 
     @Override
     public String visitBoolValue(JavaDogParser.BoolValueContext ctx) {
-        return super.visitBoolValue(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(ctx.expressionOperand().get(0).getText());
+        stringBuilder.append(" ");
+        if(ctx.operator().getText().equals("and")){
+            stringBuilder.append("&&");
+        }else if(ctx.operator().getText().equals("||")){
+            stringBuilder.append(ctx.operator().getText());
+
+        }else{
+            stringBuilder.append(ctx.operator().getText());
+        }
+
+        stringBuilder.append(" ");
+        stringBuilder.append(ctx.expressionOperand().get(1).getText());
+        stringBuilder.append(";");
+        return stringBuilder.toString();
     }
 
     @Override
     public String visitExpression(JavaDogParser.ExpressionContext ctx) {
-        return super.visitExpression(ctx);
-    }
+            return super.visitExpression(ctx);
+        }
 
     @Override
     public String visitExpressionOperand(JavaDogParser.ExpressionOperandContext ctx) {
