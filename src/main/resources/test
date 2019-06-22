@@ -1,6 +1,6 @@
 <?JD
 
 claim a;
-claim ad;
+claim ad; #test comment#
 
 ?JD>

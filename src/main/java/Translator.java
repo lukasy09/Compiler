@@ -41,7 +41,14 @@ public class Translator extends JavaDogBaseVisitor<String> {
 
     @Override
     public String visitComment(JavaDogParser.CommentContext ctx) {
-        return super.visitComment(ctx);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("//");
+        stringBuilder.append(" ");
+        for(int i = 0 ; i< ctx.REGEX_ID().size(); i++){
+            stringBuilder.append(ctx.REGEX_ID().get(i));
+            stringBuilder.append(" ");
+        }
+        return stringBuilder.toString();
     }
 
     @Override
