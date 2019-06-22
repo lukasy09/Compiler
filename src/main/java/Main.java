@@ -11,7 +11,7 @@ public class Main {
 
         CharStream inputStream = null;
         try {
-            inputStream = CharStreams.fromFileName("src/main/resources/test");
+            inputStream = CharStreams.fromFileName("src/main/resources/test.jd");
 
         } catch (Exception e) {
             System.err.println("Error");

@@ -206,8 +206,8 @@ public class Translator extends JavaDogBaseVisitor<String> {
         stringBuilder.append(" ");
         if(ctx.operator().getText().equals("and")){
             stringBuilder.append("&&");
-        }else if(ctx.operator().getText().equals("||")){
-            stringBuilder.append(ctx.operator().getText());
+        }else if(ctx.operator().getText().equals("or")){
+            stringBuilder.append("||");
 
         }else{
             stringBuilder.append(ctx.operator().getText());
